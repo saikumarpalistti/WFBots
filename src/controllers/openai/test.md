@@ -1,195 +1,162 @@
-# 🗂️ LlamaIndex 🦙
+<p align="center">
+  <a href="https://strapi.io/#gh-light-mode-only">
+    <img src="https://strapi.io/assets/strapi-logo-dark.svg" width="318px" alt="Strapi logo" />
+  </a>
+  <a href="https://strapi.io/#gh-dark-mode-only">
+    <img src="https://strapi.io/assets/strapi-logo-light.svg" width="318px" alt="Strapi logo" />
+  </a>
+</p>
 
-[![PyPI - Downloads](https://img.shields.io/pypi/dm/llama-index)](https://pypi.org/project/llama-index/)
-[![GitHub contributors](https://img.shields.io/github/contributors/jerryjliu/llama_index)](https://github.com/jerryjliu/llama_index/graphs/contributors)
-[![Discord](https://img.shields.io/discord/1059199217496772688)](https://discord.gg/dGcwcsnxhU)
-[![Ask AI](https://img.shields.io/badge/Phorm-Ask_AI-%23F2777A.svg?&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNSIgaGVpZ2h0PSI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxwYXRoIGQ9Ik00LjQzIDEuODgyYTEuNDQgMS40NCAwIDAgMS0uMDk4LjQyNmMtLjA1LjEyMy0uMTE1LjIzLS4xOTIuMzIyLS4wNzUuMDktLjE2LjE2NS0uMjU1LjIyNmExLjM1MyAxLjM1MyAwIDAgMS0uNTk1LjIxMmMtLjA5OS4wMTItLjE5Mi4wMTQtLjI3OS4wMDZsLTEuNTkzLS4xNHYtLjQwNmgxLjY1OGMuMDkuMDAxLjE3LS4xNjkuMjQ2LS4xOTFhLjYwMy42MDMgMCAwIDAgLjItLjEwNi41MjkuNTI5IDAgMCAwIC4xMzgtLjE3LjY1NC42NTQgMCAwIDAgLjA2NS0uMjRsLjAyOC0uMzJhLjkzLjkzIDAgMCAwLS4wMzYtLjI0OS41NjcuNTY3IDAgMCAwLS4xMDMtLjIuNTAyLjUwMiAwIDAgMC0uMTY4LS4xMzguNjA4LjYwOCAwIDAgMC0uMjQtLjA2N0wyLjQzNy43MjkgMS42MjUuNjcxYS4zMjIuMzIyIDAgMCAwLS4yMzIuMDU4LjM3NS4zNzUgMCAwIDAtLjExNi4yMzJsLS4xMTYgMS40NS0uMDU4LjY5Ny0uMDU4Ljc1NEwuNzA1IDRsLS4zNTctLjA3OUwuNjAyLjkwNkMuNjE3LjcyNi42NjMuNTc0LjczOS40NTRhLjk1OC45NTggMCAwIDEgLjI3NC0uMjg1Ljk3MS45NzEgMCAwIDEgLjMzNy0uMTRjLjExOS0uMDI2LjIyNy0uMDM0LjMyNS0uMDI2TDMuMjMyLjE2Yy4xNTkuMDE0LjMzNi4wMy40NTkuMDgyYTEuMTczIDEuMTczIDAgMCAxIC41NDUuNDQ3Yy4wNi4wOTQuMTA5LjE5Mi4xNDQuMjkzYTEuMzkyIDEuMzkyIDAgMCAxIC4wNzguNThsLS4wMjkuMzJaIiBmaWxsPSIjRjI3NzdBIi8+CiAgPHBhdGggZD0iTTQuMDgyIDIuMDA3YTEuNDU1IDEuNDU1IDAgMCAxLS4wOTguNDI3Yy0uMDUuMTI0LS4xMTQuMjMyLS4xOTIuMzI0YTEuMTMgMS4xMyAwIDAgMS0uMjU0LjIyNyAxLjM1MyAxLjM1MyAwIDAgMS0uNTk1LjIxNGMtLjEuMDEyLS4xOTMuMDE0LS4yOC4wMDZsLTEuNTYtLjEwOC4wMzQtLjQwNi4wMy0uMzQ4IDEuNTU5LjE1NGMuMDkgMCAuMTczLS4wMS4yNDgtLjAzM2EuNjAzLjYwMyAwIDAgMCAuMi0uMTA2LjUzMi41MzIgMCAwIDAgLjEzOS0uMTcyLjY2LjY2IDAgMCAwIC4wNjQtLjI0MWwuMDI5LS4zMjFhLjk0Ljk0IDAgMCAwLS4wMzYtLjI1LjU3LjU3IDAgMCAwLS4xMDMtLjIwMi41MDIuNTAyIDAgMCAwLS4xNjgtLjEzOC42MDUuNjA1IDAgMCAwLS4yNC0uMDY3TDEuMjczLjgyN2MtLjA5NC0uMDA4LS4xNjguMDEtLjIyMS4wNTUtLjA1My4wNDUtLjA4NC4xMTQtLjA5Mi4yMDZMLjcwNSA0IDAgMy45MzhsLjI1NS0yLjkxMUExLjAxIDEuMDEgMCAwIDEgLjM5My41NzIuOTYyLjk2MiAwIDAgMSAuNjY2LjI4NmEuOTcuOTcgMCAwIDEgLjMzOC0uMTRDMS4xMjIuMTIgMS4yMy4xMSAxLjMyOC4xMTlsMS41OTMuMTRjLjE2LjAxNC4zLjA0Ny40MjMuMWExLjE3IDEuMTcgMCAwIDEgLjU0NS40NDhjLjA2MS4wOTUuMTA5LjE5My4xNDQuMjk1YTEuNDA2IDEuNDA2IDAgMCAxIC4wNzcuNTgzbC0uMDI4LjMyMloiIGZpbGw9IndoaXRlIi8+CiAgPHBhdGggZD0iTTQuMDgyIDIuMDA3YTEuNDU1IDEuNDU1IDAgMCAxLS4wOTguNDI3Yy0uMDUuMTI0LS4xMTQuMjMyLS4xOTIuMzI0YTEuMTMgMS4xMyAwIDAgMS0uMjU0LjIyNyAxLjM1MyAxLjM1MyAwIDAgMS0uNTk1LjIxNGMtLjEuMDEyLS4xOTMuMDE0LS4yOC4wMDZsLTEuNTYtLjEwOC4wMzQtLjQwNi4wMy0uMzQ4IDEuNTU5LjE1NGMuMDkgMCAuMTczLS4wMS4yNDgtLjAzM2EuNjAzLjYwMyAwIDAgMCAuMi0uMTA2LjUzMi41MzIgMCAwIDAgLjEzOS0uMTcyLjY2LjY2IDAgMCAwIC4wNjQtLjI0MWwuMDI5LS4zMjFhLjk0Ljk0IDAgMCAwLS4wMzYtLjI1LjU3LjU3IDAgMCAwLS4xMDMtLjIwMi41MDIuNTAyIDAgMCAwLS4xNjgtLjEzOC42MDUuNjA1IDAgMCAwLS4yNC0uMDY3TDEuMjczLjgyN2MtLjA5NC0uMDA4LS4xNjguMDEtLjIyMS4wNTUtLjA1My4wNDUtLjA4NC4xMTQtLjA5Mi4yMDZMLjcwNSA0IDAgMy45MzhsLjI1NS0yLjkxMUExLjAxIDEuMDEgMCAwIDEgLjM5My41NzIuOTYyLjk2MiAwIDAgMSAuNjY2LjI4NmEuOTcuOTcgMCAwIDEgLjMzOC0uMTRDMS4xMjIuMTIgMS4yMy4xMSAxLjMyOC4xMTlsMS41OTMuMTRjLjE2LjAxNC4zLjA0Ny40MjMuMWExLjE3IDEuMTcgMCAwIDEgLjU0NS40NDhjLjA2MS4wOTUuMTA5LjE5My4xNDQuMjk1YTEuNDA2IDEuNDA2IDAgMCAxIC4wNzcuNTgzbC0uMDI4LjMyMloiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=)](https://www.phorm.ai/query?projectId=c5863b56-6703-4a5d-87b6-7e6031bf16b6)
+<h3 align="center">Open-source headless CMS, self-hosted or Cloud you’re in control.</h3>
+<p align="center">The leading open-source headless CMS, 100% JavaScript/TypeScript, flexible and fully customizable.</p>
+<p align="center"><a href="https://cloud.strapi.io/signups?source=github1">Cloud</a> · <a href="https://strapi.io/demo?utm_campaign=Growth-Experiments&utm_source=strapi%2Fstrapi%20README.md">Try live demo</a> · <a href="https://strapi.io/five?utm_campaign=Product%20Marketing%20Strapi%205%20Launch%20Q1%20Q2%202024&utm_source=GitHub&utm_medium=strapi%2Fstrapi%20README.md">Strapi 5 (coming soon)</a></p>
+<br />
 
-LlamaIndex (GPT Index) is a data framework for your LLM application. Building with LlamaIndex typically involves working with LlamaIndex core and a chosen set of integrations (or plugins). There are two ways to start building with LlamaIndex in
-Python:
+<p align="center">
+  <a href="https://www.npmjs.org/package/@strapi/strapi">
+    <img src="https://img.shields.io/npm/v/@strapi/strapi/latest.svg" alt="NPM Version" />
+  </a>
+  <a href="https://github.com/strapi/strapi/actions/workflows/tests.yml">
+    <img src="https://github.com/strapi/strapi/actions/workflows/tests.yml/badge.svg?branch=main" alt="Tests" />
+  </a>
+  <a href="https://discord.strapi.io">
+    <img src="https://img.shields.io/discord/811989166782021633?label=Discord" alt="Strapi on Discord" />
+  </a>
+  <a href="https://github.com/strapi/strapi/actions/workflows/nightly.yml">
+    <img src="https://github.com/strapi/strapi/actions/workflows/nightly.yml/badge.svg" alt="Strapi Nightly Release Build Status" />
+  </a>
+</p>
 
-1. **Starter**: `llama-index` (https://pypi.org/project/llama-index/). A starter Python package that includes core LlamaIndex as well as a selection of integrations.
+<br>
 
-2. **Customized**: `llama-index-core` (https://pypi.org/project/llama-index-core/). Install core LlamaIndex and add your chosen LlamaIndex integration packages ([temporary registry](https://pretty-sodium-5e0.notion.site/ce81b247649a44e4b6b35dfb24af28a6?v=53b3c2ced7bb4c9996b81b83c9f01139))
-   that are required for your application. There are over 300 LlamaIndex integration
-   packages that work seamlessly with core, allowing you to build with your preferred
-   LLM, embedding, and vector store providers.
+<p align="center">
+  <a href="https://strapi.io">
+    <img src="https://raw.githubusercontent.com/strapi/strapi/main/public/assets/admin-demo.gif" alt="Administration panel" />
+  </a>
+</p>
 
-The LlamaIndex Python library is namespaced such that import statements which
-include `core` imply that the core package is being used. In contrast, those
-statements without `core` imply that an integration package is being used.
+<br>
 
-```python
-# typical pattern
-from llama_index.core.xxx import ClassABC  # core submodule xxx
-from llama_index.xxx.yyy import (
-    SubclassABC,
-)  # integration yyy for submodule xxx
+Strapi Community Edition is a free and open-source headless CMS enabling you to manage any content, anywhere.
 
-# concrete example
-from llama_index.core.llms import LLM
-from llama_index.llms.openai import OpenAI
-```
+- **Self-hosted or Cloud**: You can host and scale Strapi projects the way you want. You can save time by deploying to [Strapi Cloud](https://cloud.strapi.io/signups?source=github1) or deploy to the hosting platform you want\*\*: AWS, Azure, Google Cloud, DigitalOcean.
+- **Modern Admin Panel**: Elegant, entirely customizable and a fully extensible admin panel.
+- **Multi-database support**: You can choose the database you prefer: PostgreSQL, MySQL, MariaDB, and SQLite.
+- **Customizable**: You can quickly build your logic by fully customizing APIs, routes, or plugins to fit your needs perfectly.
+- **Blazing Fast and Robust**: Built on top of Node.js and TypeScript, Strapi delivers reliable and solid performance.
+- **Front-end Agnostic**: Use any front-end framework (React, Next.js, Vue, Angular, etc.), mobile apps or even IoT.
+- **Secure by default**: Reusable policies, CORS, CSP, P3P, Xframe, XSS, and more.
+- **Powerful CLI**: Scaffold projects and APIs on the fly.
 
-### Important Links
+## Getting Started
 
-LlamaIndex.TS (Typescript/Javascript): https://github.com/run-llama/LlamaIndexTS.
+<a href="https://docs.strapi.io/developer-docs/latest/getting-started/quick-start.html" target="_blank">Read the Getting Started tutorial</a> or follow the steps below:
 
-Documentation: https://docs.llamaindex.ai/en/stable/.
+### ⏳ Installation
 
-Twitter: https://twitter.com/llama_index.
+Install Strapi with this **Quickstart** command to create a Strapi project instantly:
 
-Discord: https://discord.gg/dGcwcsnxhU.
-
-### Ecosystem
-
-- LlamaHub (community library of data loaders): https://llamahub.ai.
-- LlamaLab (cutting-edge AGI projects using LlamaIndex): https://github.com/run-llama/llama-lab.
-
-## 🚀 Overview
-
-**NOTE**: This README is not updated as frequently as the documentation. Please check out the documentation above for the latest updates!
-
-### Context
-
-- LLMs are a phenomenal piece of technology for knowledge generation and reasoning. They are pre-trained on large amounts of publicly available data.
-- How do we best augment LLMs with our own private data?
-
-We need a comprehensive toolkit to help perform this data augmentation for LLMs.
-
-### Proposed Solution
-
-That's where **LlamaIndex** comes in. LlamaIndex is a "data framework" to help you build LLM apps. It provides the following tools:
-
-- Offers **data connectors** to ingest your existing data sources and data formats (APIs, PDFs, docs, SQL, etc.).
-- Provides ways to **structure your data** (indices, graphs) so that this data can be easily used with LLMs.
-- Provides an **advanced retrieval/query interface over your data**: Feed in any LLM input prompt, get back retrieved context and knowledge-augmented output.
-- Allows easy integrations with your outer application framework (e.g. with LangChain, Flask, Docker, ChatGPT, anything else).
-
-LlamaIndex provides tools for both beginner users and advanced users. Our high-level API allows beginner users to use LlamaIndex to ingest and query their data in
-5 lines of code. Our lower-level APIs allow advanced users to customize and extend any module (data connectors, indices, retrievers, query engines, reranking modules),
-to fit their needs.
-
-## 💡 Contributing
-
-Interested in contributing? Contributions to LlamaIndex core as well as contributing
-integrations that build on the core are both accepted and highly encouraged! See our [Contribution Guide](CONTRIBUTING.md) for more details.
-
-## 📄 Documentation
-
-Full documentation can be found here: https://docs.llamaindex.ai/en/latest/.
-
-Please check it out for the most up-to-date tutorials, how-to guides, references, and other resources!
-
-## 💻 Example Usage
-
-```sh
-# custom selection of integrations to work with core
-pip install llama-index-core
-pip install llama-index-llms-openai
-pip install llama-index-llms-replicate
-pip install llama-index-embeddings-huggingface
-```
-
-Examples are in the `docs/examples` folder. Indices are in the `indices` folder (see list of indices below).
-
-To build a simple vector store index using OpenAI:
-
-```python
-import os
-
-os.environ["OPENAI_API_KEY"] = "YOUR_OPENAI_API_KEY"
-
-from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
-
-documents = SimpleDirectoryReader("YOUR_DATA_DIRECTORY").load_data()
-index = VectorStoreIndex.from_documents(documents)
-```
-
-To build a simple vector store index using non-OpenAI LLMs, e.g. Llama 2 hosted on [Replicate](https://replicate.com/), where you can easily create a free trial API token:
-
-```python
-import os
-
-os.environ["REPLICATE_API_TOKEN"] = "YOUR_REPLICATE_API_TOKEN"
-
-from llama_index.core import Settings, VectorStoreIndex, SimpleDirectoryReader
-from llama_index.embeddings.huggingface import HuggingFaceEmbedding
-from llama_index.llms.replicate import Replicate
-from transformers import AutoTokenizer
-
-# set the LLM
-llama2_7b_chat = "meta/llama-2-7b-chat:8e6975e5ed6174911a6ff3d60540dfd4844201974602551e10e9e87ab143d81e"
-Settings.llm = Replicate(
-    model=llama2_7b_chat,
-    temperature=0.01,
-    additional_kwargs={"top_p": 1, "max_new_tokens": 300},
-)
-
-# set tokenizer to match LLM
-Settings.tokenizer = AutoTokenizer.from_pretrained(
-    "NousResearch/Llama-2-7b-chat-hf"
-)
-
-# set the embed model
-Settings.embed_model = HuggingFaceEmbedding(
-    model_name="BAAI/bge-small-en-v1.5"
-)
-
-documents = SimpleDirectoryReader("YOUR_DATA_DIRECTORY").load_data()
-index = VectorStoreIndex.from_documents(
-    documents,
-)
-```
-
-To query:
-
-```python
-query_engine = index.as_query_engine()
-query_engine.query("YOUR_QUESTION")
-```
-
-By default, data is stored in-memory.
-To persist to disk (under `./storage`):
-
-```python
-index.storage_context.persist()
-```
-
-To reload from disk:
-
-```python
-from llama_index.core import StorageContext, load_index_from_storage
-
-# rebuild storage context
-storage_context = StorageContext.from_defaults(persist_dir="./storage")
-# load index
-index = load_index_from_storage(storage_context)
-```
-
-## 🔧 Dependencies
-
-We use poetry as the package manager for all Python packages. As a result, the
-dependencies of each Python package can be found by referencing the `pyproject.toml`
-file in each of the package's folders.
+- (Use **yarn** to install the Strapi project (recommended). [Install yarn with these docs](https://yarnpkg.com/lang/en/docs/install/).)
 
 ```bash
-cd <desired-package-folder>
-pip install poetry
-poetry install --with dev
+yarn create strapi-app my-project --quickstart
 ```
 
-## 📖 Citation
+**or**
 
-Reference to cite if you use LlamaIndex in a paper:
+- (Use npm/npx to install the Strapi project.)
 
+```bash
+npx create-strapi-app my-project --quickstart
 ```
-@software{Liu_LlamaIndex_2022,
-author = {Liu, Jerry},
-doi = {10.5281/zenodo.1234},
-month = {11},
-title = {{LlamaIndex}},
-url = {https://github.com/jerryjliu/llama_index},
-year = {2022}
-}
-```
+
+This command generates a brand new project with the default features (authentication, permissions, content management, content type builder & file upload). The **Quickstart** command installs Strapi using a **SQLite** database which is used for prototyping in development.
+
+Enjoy 🎉
+
+### 🖐 Requirements
+
+Complete installation requirements can be found in the documentation under <a href="https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment.html">Installation Requirements</a>.
+
+**Supported operating systems**:
+
+- Ubuntu LTS/Debian 9.x
+- CentOS/RHEL 8
+- macOS Mojave
+- Windows 10
+- Docker
+
+(Please note that Strapi may work on other operating systems, but these are not tested nor officially supported at this time.)
+
+**Node:**
+
+Strapi only supports maintenance and LTS versions of Node.js. Please refer to the <a href="https://nodejs.org/en/about/releases/">Node.js release schedule</a> for more information. NPM versions installed by default with Node.js are supported. Generally it's recommended to use yarn over npm where possible.
+
+| Strapi Version  | Recommended | Minimum |
+| --------------- | ----------- | ------- |
+| 4.14.5 and up   | 20.x        | 18.x    |
+| 4.11.0 and up   | 18.x        | 16.x    |
+| 4.3.9 to 4.10.x | 18.x        | 14.x    |
+| 4.0.x to 4.3.8  | 16.x        | 14.x    |
+
+**Database:**
+
+| Database   | Recommended | Minimum |
+| ---------- | ----------- | ------- |
+| MySQL      | 8.0         | 5.7.8   |
+| MariaDB    | 10.6        | 10.3    |
+| PostgreSQL | 14.0        | 11.0    |
+| SQLite     | 3           | 3       |
+
+**We recommend always using the latest version of Strapi stable to start your new projects**.
+
+## Features
+
+- **Content Types Builder**: Build the most flexible publishing experience for your content managers, by giving them the freedom to create any page on the go with [fields](https://docs.strapi.io/user-docs/content-manager/writing-content#filling-up-fields), components and [Dynamic Zones](https://docs.strapi.io/user-docs/content-manager/writing-content#dynamic-zones).
+- **Media Library**: Upload your images, videos, audio or documents to the media library. Easily find the right asset, edit and reuse it.
+- **Internationalization**: The Internationalization (i18n) plugin allows Strapi users to create, manage and distribute localized content in different languages, called "locales"
+- **Role Based Access Control**: Create an unlimited number of custom roles and permissions for admin and end users.
+- **GraphQL or REST**: Consume the API using REST or GraphQL
+
+You can unlock additional features such as SSO, Audit Logs, Review Workflows in [Strapi Cloud](https://cloud.strapi.io/login?source=github1) or [Strapi Enterprise](https://strapi.io/enterprise?source=github1).
+
+**[See more on our website](https://strapi.io/overview)**.
+
+## Contributing
+
+Please read our [Contributing Guide](./CONTRIBUTING.md) before submitting a Pull Request to the project.
+
+## Community support
+
+For general help using Strapi, please refer to [the official Strapi documentation](https://docs.strapi.io). For additional help, you can use one of these channels to ask a question:
+
+- [Discord](https://discord.strapi.io) (For live discussion with the Community and Strapi team)
+- [GitHub](https://github.com/strapi/strapi) (Bug reports, Contributions)
+- [Community Forum](https://forum.strapi.io) (Questions and Discussions)
+- [Feedback section](https://feedback.strapi.io) (Roadmap, Feature requests)
+- [Twitter](https://twitter.com/strapijs) (Get the news fast)
+- [Facebook](https://www.facebook.com/Strapi-616063331867161)
+- [YouTube Channel](https://www.youtube.com/strapi) (Learn from Video Tutorials)
+
+## Migration
+
+Follow our [migration guides](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides.html) on the documentation to keep your projects up-to-date.
+
+## Roadmap
+
+Check out our [roadmap](https://feedback.strapi.io) to get informed of the latest features released and the upcoming ones. You may also give us insights and vote for a specific feature.
+
+## Documentation
+
+See our dedicated [repository](https://github.com/strapi/documentation) for the Strapi documentation, or view our documentation live:
+
+- [Developer docs](https://docs.strapi.io/developer-docs/latest/getting-started/introduction.html)
+- [User guide](https://docs.strapi.io/user-docs/latest/getting-started/introduction.html)
+
+## Try live demo
+
+See for yourself what's under the hood by getting access to a [hosted Strapi project](https://strapi.io/demo) with sample data.
+
+## License
+
+See the [LICENSE](./LICENSE) file for licensing information.

@@ -7,8 +7,8 @@ const router = express.Router();
 router.post("/query/docs", async (req, res, next) => {
 	try {
 		console.log(req.body);
-		let resp = queryDocument(req);
-		res.json(resp);
+		let resp = await queryDocument(req);
+		res.status(200).json(resp);
 	} catch (err) {
 		res.status(400).json({ error: err, data: null });
 	}
