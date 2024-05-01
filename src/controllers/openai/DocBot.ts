@@ -6,6 +6,7 @@ import path from 'path';
 
 export async function queryDocument(req: Request) {
 	try {
+		if(!process.env.OPENAI_API_KEY) throw new Error("No Open AI Key Available to call.")
 		const filePath = path.resolve(__dirname, 'test.md');
 		const essay = await fs.readFile(filePath, "utf-8");
 	

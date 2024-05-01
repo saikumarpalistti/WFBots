@@ -6,8 +6,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import helmet from "helmet";
-import { initalizeSlackBots } from "./src/controllers/slack";
-import path from "path";
+import { initializeSlackBots } from "./src/controllers/slack";
 import setRoutes from "./src/routes";
 
 dotenv.config();
@@ -44,9 +43,9 @@ server.use((req, res, next) => {
 });
 
 setRoutes(server);
-initalizeSlackBots();
+if (process.env.APP_TOKEN && process.env.SLACK_BOT_TOKEN && process.env.SLACK_SIGNING_SECRET) initializeSlackBots();
 
-server.listen(port, () => console.info(`Worker Process started on Port: ${port} || PID: ${process.pid}`));
+server.listen(port, () => console.info(`Server started on Port: ${port} || PID: ${process.pid}`));
 
 process.on("beforeExit", async (signal) => {
 	console.error(`Worked PID: ${process.pid}, before exited on signal: ${signal}`);

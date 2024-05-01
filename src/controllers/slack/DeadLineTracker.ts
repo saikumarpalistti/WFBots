@@ -2,12 +2,13 @@ const { App } = require("@slack/bolt");
 require("dotenv").config();
 
 // Initializes your app with credentials
-export const deadlineTrackerBot = new App({
+export const deadlineTrackerBot = process.env.APP_TOKEN && process.env.SLACK_BOT_TOKEN && process.env.SLACK_SIGNING_SECRET ? 
+	new App({
 	token: process.env.SLACK_BOT_TOKEN,
 	signingSecret: process.env.SLACK_SIGNING_SECRET,
 	socketMode: true, // enable to use socket mode
 	appToken: process.env.APP_TOKEN,
-});
+}) : null;
 
 export async function initializeDeadlineTrackerBot() {
 	const port = 3000;

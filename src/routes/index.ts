@@ -5,6 +5,7 @@
 import express, { Application } from "express";
 
 import openAIRouter from "./openai"
+
 /**
  * Sets up routes for the provided Express application
  *
