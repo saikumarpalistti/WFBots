@@ -1,18 +1,18 @@
+require("dotenv").config();
+
 import express, { Application } from "express";
 
 import bodyParser from "body-parser";
 import compression from "compression";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import dotenv from "dotenv";
 import helmet from "helmet";
 import { initializeSlackBots } from "./src/controllers/slack";
 import setRoutes from "./src/routes";
 
-dotenv.config();
-
 declare global {
-	var server: any;
+	var server: Application;
+	var slackBots: Record<string, any>;
 }
 
 //Express Initialization
@@ -43,7 +43,7 @@ server.use((req, res, next) => {
 });
 
 setRoutes(server);
-if (process.env.APP_TOKEN && process.env.SLACK_BOT_TOKEN && process.env.SLACK_SIGNING_SECRET) initializeSlackBots();
+initializeSlackBots();
 
 server.listen(port, () => console.info(`Server started on Port: ${port} || PID: ${process.pid}`));
 

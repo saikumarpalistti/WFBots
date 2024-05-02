@@ -3,6 +3,7 @@ import { AllMiddlewareArgs, App, SlackCommandMiddlewareArgs, SlackEventMiddlewar
 import { StringIndexed } from "@slack/bolt/dist/types/helpers";
 
 // Initializes your app with credentials
+
 export const deadlineTrackerBot =
 	process.env.APP_TOKEN && process.env.SLACK_BOT_TOKEN && process.env.SLACK_SIGNING_SECRET
 		? new App({
@@ -17,7 +18,7 @@ export async function initializeDeadlineTrackerBot() {
 	try {
 		if (!deadlineTrackerBot) throw new Error("Deadline Tracker Could not be initialized");
 		await deadlineTrackerBot.start(process.env.PORT || 3000);
-
+		console.info("Deadline Tracker Bot Initialized!!");
 		deadlineTrackerBot.message("hey", async ({ say }: SlackEventMiddlewareArgs<"message"> & AllMiddlewareArgs<StringIndexed>) => {
 			try {
 				say("Hello Human!");
@@ -33,7 +34,7 @@ export async function initializeDeadlineTrackerBot() {
 				console.error(error);
 			}
 		});
-		console.log("Bolt app started!!");
+		return deadlineTrackerBot;
 	} catch (err) {
 		console.error(err);
 	}
