@@ -4,7 +4,7 @@ import { StringIndexed } from "@slack/bolt/dist/types/helpers";
 
 // Initializes your app with credentials
 
-export const deadlineTrackerBot =
+export const deadlineTrackerBot: App<StringIndexed> | null =
 	process.env.APP_TOKEN && process.env.SLACK_BOT_TOKEN && process.env.SLACK_SIGNING_SECRET
 		? new App({
 				token: process.env.SLACK_BOT_TOKEN,
